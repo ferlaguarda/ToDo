@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ToDo.Desktop/ToDo.Desktop.csproj" />
+  <Project Path="ToDo.Entities/ToDo.Entities.csproj" />
+  <Project Path="ToDo.Test/ToDo.Test.csproj" />
+</Solution>
