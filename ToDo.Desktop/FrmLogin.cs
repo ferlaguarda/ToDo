@@ -1,4 +1,5 @@
-﻿using ToDo.Entities;
+﻿using ToDo.Dominio;
+using ToDo.Entities;
 
 namespace ToDo.Desktop
 {
@@ -25,30 +26,27 @@ namespace ToDo.Desktop
             if (string.IsNullOrEmpty(txtPassword.Text))
                 MessageBox.Show("La contraseña es obligatoria", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 
-            bool existecuenta = false;
-            foreach (var cuenta in _cuentas)
+            try
             {
-                if (cuenta.Owner.Email == txtEmail.Text)
+                GestorAutenticacion gestor = new GestorAutenticacion();
+                var datoCuenta = gestor.Login(txtEmail.Text, txtPassword.Text);
+                FrmMain main = new FrmMain(datoCuenta);
+                this.Hide();
+                DialogResult result = main.ShowDialog();
+                if (result == DialogResult.Cancel)
                 {
-                    if (cuenta.Owner.Password == txtPassword.Text)
-                    {
-                        existecuenta = true;
-                        FrmMain main = new FrmMain(cuenta);
-                        this.Hide();
-                        DialogResult result = main.ShowDialog();
-                        if (result == DialogResult.Cancel)
-                        {
-                            LimpiarControles();
-                            this.Show();
-                        }
-                        else if (result == DialogResult.Abort)
-                            this.Close();
-
-                    }
+                    LimpiarControles();
+                    this.Show();
                 }
+                else if (result == DialogResult.Abort)
+                    this.Close();
             }
-            if(!existecuenta)
-                MessageBox.Show("Las credenciales no son correctas", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.DialogResult = DialogResult.Cancel;
+            }
+            
         }
 
         private void LinkRegistrarme_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

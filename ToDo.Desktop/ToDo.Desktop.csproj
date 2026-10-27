@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ToDo.Dominio\ToDo.Dominio.csproj" />
     <ProjectReference Include="..\ToDo.Entities\ToDo.Entities.csproj" />
   </ItemGroup>
 

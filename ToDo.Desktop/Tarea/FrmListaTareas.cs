@@ -15,6 +15,7 @@ namespace ToDo.Desktop.Tarea
         {
             InitializeComponent();
             dgvListaTareas.DataSource = tareas;
+            checkedListBox1.DataSource = tareas;
         }
     }
 }

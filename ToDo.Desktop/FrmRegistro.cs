@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using ToDo.Dominio;
 using ToDo.Entities;
 using ToDo.Entities.Enumerados;
 
@@ -22,17 +23,21 @@ namespace ToDo.Desktop
 
         private void btnConfirmar_Click(object sender, EventArgs e)
         {
-            NuevaCuenta = new Cuenta()
+            GestorAutenticacion gestor = new GestorAutenticacion();
+            try
             {
-                Owner = new Administrador()
-                {
-                    Nombre = txtNombre.Text,
-                    Email = txtEmail.Text,
-                    Password = txtPassword.Text
-                },
-                TipoDeCuenta = TipoCuenta.Personal                
-            };
-            this.DialogResult = DialogResult.OK;
+                NuevaCuenta = gestor.CrearCuenta(
+                        txtNombre.Text,
+                        txtEmail.Text,
+                        txtPassword.Text
+                        );
+                this.DialogResult = DialogResult.OK;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.DialogResult = DialogResult.Cancel;
+            }
             this.Close();
         }
     }

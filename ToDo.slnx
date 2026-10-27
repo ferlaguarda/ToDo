@@ -1,5 +1,7 @@
 <Solution>
   <Project Path="ToDo.Desktop/ToDo.Desktop.csproj" />
+  <Project Path="ToDo.Dominio/ToDo.Dominio.csproj" Id="1788a64e-828e-48e8-8fb7-f5feb23adf4d" />
   <Project Path="ToDo.Entities/ToDo.Entities.csproj" />
+  <Project Path="ToDo.Persistencia/ToDo.Persistencia.csproj" Id="52851a01-7b58-470b-ab93-713bef63b5cf" />
   <Project Path="ToDo.Test/ToDo.Test.csproj" />
 </Solution>
