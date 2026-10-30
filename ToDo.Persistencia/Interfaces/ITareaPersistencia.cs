@@ -8,5 +8,6 @@ namespace ToDo.Persistencia.Interfaces
         List<Tarea> ObtenerTareasPorCuenta(Guid cuentaId);
         List<Tarea> ObtenerTareasPorUsuario(Guid cuentaId);
         bool ActualizarTarea(Tarea tarea);
+        List<Tarea> LeerTareas();
     }
 }

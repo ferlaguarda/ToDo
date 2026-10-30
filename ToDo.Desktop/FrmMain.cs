@@ -48,29 +48,18 @@ namespace ToDo.Desktop
 
         private void Tsmi_Nueva_Tarea_Click(object sender, EventArgs e)
         {
-            Tarea.FrmAltaCuenta frmAlta = new Tarea.FrmAltaCuenta();
+            Tarea.FrmAltaCuenta frmAlta = new Tarea.FrmAltaCuenta(MiCuenta.Id);
             //frmAlta.MdiParent = this;
             DialogResult resultALta = frmAlta.ShowDialog();
             if(resultALta == DialogResult.OK)
             {
-                if (MiCuenta.Tareas is null)
-                    MiCuenta.Tareas = [];
-
-                if (frmAlta.NuevaTarea is not null)
-                    MiCuenta.Tareas.Add(frmAlta.NuevaTarea);
+                MessageBox.Show($"La tarea fue agregada satisfactoriamente.");
             }
-            if (MiCuenta.Tareas is not null)
-                MessageBox.Show($"Tareas: {MiCuenta.Tareas.Count}");
         }
 
         private void Tsmi_Ver_Tareas_Click(object sender, EventArgs e)
         {
-            if (MiCuenta.Tareas is null)
-            {
-                MessageBox.Show($"No hay tareas registradas para visualizar.");
-                return;
-            }
-            FrmListaTareas frmTareas = new FrmListaTareas(MiCuenta.Tareas);
+            FrmListaTareas frmTareas = new FrmListaTareas(MiCuenta.Id);
             frmTareas.MdiParent = this;
             frmTareas.Show();
         }

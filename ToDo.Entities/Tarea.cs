@@ -5,6 +5,7 @@ namespace ToDo.Entities
     public class Tarea
     {
         public int Id { get; set; }
+        public required Guid IdCuenta { get; set; }
         public required string Nombre { get; set; }
         public string? Descripcion { get; set; }
         public DateTime FechaCreacion { get; set; } = DateTime.UtcNow;

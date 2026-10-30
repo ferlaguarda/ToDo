@@ -13,13 +13,25 @@ namespace ToDo.Dominio
         }
         public int CrearTarea(Tarea tarea)
         {
-            if (_persistenciaTarea == null) throw new InvalidOperationException("Persistencia no inicializada");
+            if (_persistenciaTarea == null) 
+                throw new InvalidOperationException("Persistencia no inicializada");
+            var tareas = _persistenciaTarea.LeerTareas();
+            int ultimoId = tareas.Any() ? tareas.Max(t => t.Id) : 0;
+            tarea.Id = ultimoId + 1;
             return _persistenciaTarea.CrearTarea(tarea);
         }
 
         public List<Tarea> ObtenerTareasPorCuenta(Guid cuentaId)
         {
-            throw new NotImplementedException();
+            if (_persistenciaTarea == null)
+                throw new InvalidOperationException("Persistencia no inicializada");
+
+            var todasLasTareas = _persistenciaTarea.LeerTareas();
+            var tareasCuenta = todasLasTareas
+                .Where(t => t.IdCuenta == cuentaId)
+                .ToList();
+            
+            return tareasCuenta;
         }
 
         public List<Tarea> ObtenerTareasPorUsuario(Guid cuentaId)

@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ToDo.Entities;
+﻿using ToDo.Entities;
 using ToDo.Persistencia.Interfaces;
 
 namespace ToDo.Persistencia.DalArchivos
 {
     public class CuentaArchivo : ICuentaPersistencia
     {
+        private string _filePath = 
+            Path.Combine(Constantes.CARPETA_ARCHIVOS, $"{Constantes.ARCHIVO_CUENTAS}.json");
+        
         public Cuenta? BuscarCuentaPorOwner(string ownerEmail)
         {
             List<Cuenta> cuentas = LeerCuentas();
@@ -25,22 +25,18 @@ namespace ToDo.Persistencia.DalArchivos
         {
             List<Cuenta> cuentas = LeerCuentas();
             cuentas.Add(cuenta);
-            var directorio = "C:\\Temporales\\ToDo.Files";
-            var filePath = Path.Combine(directorio, $"{Constantes.ARCHIVO_CUENTAS}.json");
             var json = System.Text.Json.JsonSerializer.Serialize(cuentas);
-            File.WriteAllText(filePath, json);
+            File.WriteAllText(_filePath, json);
             return 0;
         }
         
         private List<Cuenta> LeerCuentas()
         {
-            var directorio = "C:\\Temporales\\ToDo.Files";
-            var filePath = Path.Combine(directorio, $"{Constantes.ARCHIVO_CUENTAS}.json");
-            if (!File.Exists(filePath))
+            if (!File.Exists(_filePath))
             {
                 return new List<Cuenta>();
             }
-            var json = File.ReadAllText(filePath);
+            var json = File.ReadAllText(_filePath);
             return System.Text.Json.JsonSerializer.Deserialize<List<Cuenta>>(json) 
                 ?? new List<Cuenta>();
         }

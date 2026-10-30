@@ -5,6 +5,12 @@ namespace ToDo.Persistencia.DalArchivos
 {
     public class TareaArchivo : ITareaPersistencia
     {
+        private string _filePath =
+            Path.Combine(Constantes.CARPETA_ARCHIVOS, $"{Constantes.ARCHIVO_TAREAS}.json");
+
+        private IFileProvider _fileProvider = new FileProviders.JsonFileProvider();
+
+
         public bool ActualizarTarea(Tarea tarea)
         {
             throw new NotImplementedException();
@@ -12,7 +18,10 @@ namespace ToDo.Persistencia.DalArchivos
 
         public int CrearTarea(Tarea tarea)
         {
-            throw new NotImplementedException();
+            List<Tarea> tareas = _fileProvider.LeerRegistros<Tarea>(_filePath);
+            tareas.Add(tarea);
+            _fileProvider.GuardarRegistros<Tarea>(_filePath, tareas);
+            return tarea.Id;
         }
 
         public List<Tarea> ObtenerTareasPorCuenta(Guid cuentaId)
@@ -25,17 +34,9 @@ namespace ToDo.Persistencia.DalArchivos
             throw new NotImplementedException();
         }
 
-        private List<Tarea> LeerTareas()
+        public List<Tarea> LeerTareas()
         {
-            var directorio = "C:\\Temporales\\ToDo.Files";
-            var filePath = Path.Combine(directorio, $"{Constantes.ARCHIVO_TAREAS}.json");
-            if (!File.Exists(filePath))
-            {
-                return new List<Tarea>();
-            }
-            var json = File.ReadAllText(filePath);
-            return System.Text.Json.JsonSerializer.Deserialize<List<Tarea>>(json)
-                ?? new List<Tarea>();
+            return _fileProvider.LeerRegistros<Tarea>(_filePath);
         }
     }
 }

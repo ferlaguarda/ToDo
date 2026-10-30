@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using ToDo.Entities;
+﻿using ToDo.Dominio;
 
 namespace ToDo.Desktop.Tarea
 {
     public partial class FrmListaTareas : Form
     {
-        public FrmListaTareas(List<Entities.Tarea> tareas)
+        public FrmListaTareas(Guid cuentaId)
         {
             InitializeComponent();
-            dgvListaTareas.DataSource = tareas;
-            checkedListBox1.DataSource = tareas;
+            GestorTarea gestorTarea = new GestorTarea();
+            dgvListaTareas.DataSource = gestorTarea.ObtenerTareasPorCuenta(cuentaId);
+            //checkedListBox1.DataSource = tareas;
         }
     }
 }

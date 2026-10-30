@@ -1,12 +1,11 @@
 ﻿using ToDo.Entities.Enumerados;
 using ToDo.Entities;
+using ToDo.Dominio;
 
 namespace ToDo.Desktop.Tarea
 {
     public partial class FrmAltaCuenta : Form
     {
-        public Entities.Tarea? NuevaTarea { get; private set; }
-
         private List<Prioridad> _prioridades = new List<Prioridad>
         {
             Prioridad.Baja,
@@ -15,10 +14,13 @@ namespace ToDo.Desktop.Tarea
             Prioridad.Critica
         };
 
-        public FrmAltaCuenta()
+        private Guid _idCuenta;
+
+        public FrmAltaCuenta(Guid idCuenta)
         {
             InitializeComponent();
             CboPrioridad.DataSource = _prioridades;
+            _idCuenta = idCuenta;
         }
 
         private void CboPrioridad_SelectedIndexChanged(object sender, EventArgs e)
@@ -35,8 +37,9 @@ namespace ToDo.Desktop.Tarea
 
         private void BtnGuardar_Click(object sender, EventArgs e)
         {
-            NuevaTarea = new Entities.Tarea()
+            var tarea = new Entities.Tarea()
             {
+                IdCuenta = _idCuenta,
                 Nombre = txtNombre.Text,
                 Descripcion = txtDescripcion.Text,
                 FechaCreacion = DateTime.UtcNow,
@@ -50,8 +53,18 @@ namespace ToDo.Desktop.Tarea
                     ? (Usuario)CboResponsable.SelectedItem
                     : null
             };
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+
+            try
+            {
+                GestorTarea gestor = new GestorTarea();
+                int tareaId = gestor.CrearTarea(tarea);
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"ERROR",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
         }
     }
 }
