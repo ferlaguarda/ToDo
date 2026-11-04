@@ -44,5 +44,17 @@ namespace ToDo.Dominio
         {
             throw new NotImplementedException();
         }
+
+        public bool EliminarTarea(int tareaId)
+        {
+            if (_persistenciaTarea == null)
+                throw new InvalidOperationException("Persistencia no inicializada");
+
+            var tarea = _persistenciaTarea.BuscarTareaPorId(tareaId);
+            if (tarea == null)
+                throw new Exception("Tarea no encontrada");
+
+            return _persistenciaTarea.EliminarTarea(tarea);
+        }
     }
 }

@@ -73,6 +73,7 @@
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(332, 27);
             txtEmail.TabIndex = 0;
+            txtEmail.Text = "la_mezcla@gmail.com";
             // 
             // txtPassword
             // 
@@ -81,6 +82,7 @@
             txtPassword.PasswordChar = '*';
             txtPassword.Size = new Size(332, 27);
             txtPassword.TabIndex = 1;
+            txtPassword.Text = "admin1234";
             // 
             // btnAcceder
             // 

@@ -16,5 +16,12 @@ namespace ToDo.Entities
         public List<Nota>? Notas { get; set; }
         public List<Comentario>? Comentarios { get; set; }
         public Usuario? Responsable { get; set; }
+
+        public override bool Equals(object? obj)
+        {
+            if (obj is null)
+                return false;
+            return this.Id == (obj as Tarea).Id;
+         }
     }
 }

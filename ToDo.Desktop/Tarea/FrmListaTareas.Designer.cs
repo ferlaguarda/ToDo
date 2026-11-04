@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             dgvListaTareas = new DataGridView();
-            checkedListBox1 = new CheckedListBox();
             ((System.ComponentModel.ISupportInitialize)dgvListaTareas).BeginInit();
             SuspendLayout();
             // 
@@ -39,25 +38,17 @@
             dgvListaTareas.Location = new Point(41, 21);
             dgvListaTareas.Name = "dgvListaTareas";
             dgvListaTareas.RowHeadersWidth = 51;
-            dgvListaTareas.Size = new Size(649, 226);
+            dgvListaTareas.Size = new Size(918, 295);
             dgvListaTareas.TabIndex = 0;
-            // 
-            // checkedListBox1
-            // 
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(140, 280);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(165, 114);
-            checkedListBox1.TabIndex = 1;
             // 
             // FrmListaTareas
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(860, 430);
-            Controls.Add(checkedListBox1);
+            ClientSize = new Size(1000, 430);
             Controls.Add(dgvListaTareas);
             Name = "FrmListaTareas";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Lista de tareas registradas";
             ((System.ComponentModel.ISupportInitialize)dgvListaTareas).EndInit();
             ResumeLayout(false);
@@ -66,6 +57,5 @@
         #endregion
 
         private DataGridView dgvListaTareas;
-        private CheckedListBox checkedListBox1;
     }
 }

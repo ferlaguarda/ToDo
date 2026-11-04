@@ -38,5 +38,20 @@ namespace ToDo.Persistencia.DalArchivos
         {
             return _fileProvider.LeerRegistros<Tarea>(_filePath);
         }
+
+        public Tarea? BuscarTareaPorId(int idTarea)
+        {
+            List<Tarea> tareas = _fileProvider.LeerRegistros<Tarea>(_filePath);
+            var tarea = tareas.Where(t => t.Id == idTarea).FirstOrDefault();
+            return tarea is null ? null : tarea;
+        }
+
+        public bool EliminarTarea(Tarea tarea)
+        {
+            List<Tarea> tareas = _fileProvider.LeerRegistros<Tarea>(_filePath);
+            tareas.Remove(tarea);
+            _fileProvider.GuardarRegistros<Tarea>(_filePath, tareas);
+            return true;
+        }
     }
 }
