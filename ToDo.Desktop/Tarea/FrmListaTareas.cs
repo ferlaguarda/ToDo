@@ -1,96 +1,90 @@
 ﻿using ToDo.Dominio;
+using ToDo.Entities;
 
 namespace ToDo.Desktop.Tarea
 {
     public partial class FrmListaTareas : Form
     {
-        private GestorTarea _gestorTarea;
+        private GestorTarea _gestorTarea = new GestorTarea();
+        private Guid _cuentaId;
+
         public FrmListaTareas(Guid cuentaId)
         {
             InitializeComponent();
-            _gestorTarea = new GestorTarea();
-            Configure_GridView();
-            dgvListaTareas.DataSource = _gestorTarea.ObtenerTareasPorCuenta(cuentaId);
+            _cuentaId = cuentaId;
+            CargarTareas();
         }
 
-        private void Configure_GridView()
+        private void DgvListaTareas_SelectionChanged(object sender, EventArgs e)
         {
-            dgvListaTareas.AutoGenerateColumns = false;
-            AgregarColumnaEnGrilla("Id", "Nr.");
-            AgregarColumnaEnGrilla("Nombre", "Nombre");
-            AgregarColumnaEnGrilla("FechaLimite", "Vencimiento");
-            AgregarColumnaEnGrilla("EstadoTarea", "Estado");
-            AgregarColumnaEnGrilla("PrioridadTarea", "Prioridad");
-            AgregarBtnEnGrilla("Modificar");
-            AgregarBtnEnGrilla("Detalle");
-            AgregarBtnEnGrilla("Eliminar");
-
-            dgvListaTareas.CellContentClick += DgvCellContentClick;
-        }
-
-        private void AgregarColumnaEnGrilla(string propiedad, string cabezal)
-        {
-            DataGridViewTextBoxColumn columna = new DataGridViewTextBoxColumn()
+            CheckTaskSelection(dgvListaTareas.SelectedRows.Count);
+            if (dgvListaTareas.SelectedRows.Count > 0)
             {
-                DataPropertyName = propiedad,
-                HeaderText = cabezal,
-                AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
-            };
-            dgvListaTareas.Columns.Add(columna);
-        }
-
-        private void AgregarBtnEnGrilla(string texto)
-        {
-            DataGridViewButtonColumn colBtn = new DataGridViewButtonColumn()
-            {
-                Name = $"btn{texto}",
-                Text = texto,
-                HeaderText = string.Empty,
-                UseColumnTextForButtonValue = true,
-            };
-            dgvListaTareas.Columns.Add(colBtn);
-
-        }
-    
-        private void DgvCellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex < 0)
-                return;
-
-            string nombreColumna = dgvListaTareas.Columns[e.ColumnIndex].Name;
-            var tarea = dgvListaTareas.Rows[e.RowIndex].DataBoundItem as ToDo.Entities.Tarea;
-            var tarea2 = (ToDo.Entities.Tarea)dgvListaTareas.Rows[e.RowIndex].DataBoundItem;
-            switch (nombreColumna)
-            {
-                case "btnModificar":
-                    MessageBox.Show("Modificando");
-                    break;
-                case "btnDetalle":
-                    MessageBox.Show("Mostrando detalle");
-                    break;
-                case "btnEliminar":
-                    var dialogResult = MessageBox.Show("¿Está seguro de eliminar la tarea?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if(dialogResult == DialogResult.Yes)
-                    {
-                        try
-                        {
-                            if (_gestorTarea.EliminarTarea(tarea.Id))
-                            {
-                                MessageBox.Show("Tarea eliminada correctamente");
-                                dgvListaTareas.DataSource = _gestorTarea.ObtenerTareasPorCuenta(tarea.IdCuenta);
-                            }
-                            else
-                                MessageBox.Show("No se pudo eliminar la tarea");
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show($"Error al eliminar la tarea: {ex.Message}");
-                        }
-                    }
-                    break;
+                // Obtener datos de la fila seleccionada
+                var tarea = dgvListaTareas.SelectedRows[0].DataBoundItem as ToDo.Entities.Tarea;
             }
         }
 
+        private void CheckTaskSelection(int selectedTaskNumber)
+        {
+            gbTaskActions.Enabled = (selectedTaskNumber > 0);
+            if (selectedTaskNumber > 1)
+            {
+                btnEdit.Enabled = false;
+                btnInfo.Enabled = false;
+            }
+            else
+            {
+                btnEdit.Enabled = true;
+                btnInfo.Enabled = true;
+            }
+        }
 
+        private void CargarTareas()
+        {
+            dgvListaTareas.DataSource = null;
+            dgvListaTareas.DataSource = _gestorTarea.ObtenerTareasPorCuenta(_cuentaId); 
+        }
+
+        private void BtnAdd_Click(object sender, EventArgs e)
+        {
+            Tarea.FrmAltaCuenta frmAlta = new Tarea.FrmAltaCuenta(_cuentaId);
+            DialogResult resultALta = frmAlta.ShowDialog();
+            if (resultALta == DialogResult.OK)
+            {
+                MessageBox.Show($"La tarea fue agregada satisfactoriamente.");
+                CargarTareas();
+            }
+        }
+
+        private void BtnSearch_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnInfo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnEdit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnComment_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnAsign_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnRemove_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
