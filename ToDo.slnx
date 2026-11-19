@@ -4,4 +4,8 @@
   <Project Path="ToDo.Entities/ToDo.Entities.csproj" />
   <Project Path="ToDo.Persistencia/ToDo.Persistencia.csproj" Id="52851a01-7b58-470b-ab93-713bef63b5cf" />
   <Project Path="ToDo.Test/ToDo.Test.csproj" />
+  <Project Path="ToDoDatabase/ToDoDatabase.sqlproj" Id="fc8686cc-2474-4677-aa19-259861819bfb">
+    <Build />
+    <Deploy />
+  </Project>
 </Solution>
