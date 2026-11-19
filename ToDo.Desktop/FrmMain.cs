@@ -1,6 +1,5 @@
 ﻿using ToDo.Desktop.Tarea;
 using ToDo.Entities;
-using ToDo.Entities.Constantes;
 
 namespace ToDo.Desktop
 {
@@ -12,22 +11,6 @@ namespace ToDo.Desktop
         {
             InitializeComponent();
             MiCuenta = cuenta;
-        }
-
-        public FrmMain(Dictionary<string, string> datosCuenta)
-        {
-            InitializeComponent();
-            MiCuenta = new Cuenta
-            {
-                Id = new Guid(datosCuenta[ConstantesDeSesion.ID_CUENTA]),
-                Owner = new Administrador
-                {
-                    Id = Convert.ToInt32(datosCuenta[ConstantesDeSesion.ID_USUARIO]),
-                    Nombre = datosCuenta[ConstantesDeSesion.NOMBRE_USUARIO],
-                    Email = datosCuenta[ConstantesDeSesion.CORREO_USUARIO],
-                    Password = ""
-                }
-            };
         }
         private void Tsmi_MisDatos_Click(object sender, EventArgs e)
         {
